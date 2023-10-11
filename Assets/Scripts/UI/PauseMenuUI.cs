@@ -9,17 +9,40 @@ public class PauseMenuUI : MonoBehaviour
     
     private void Awake()
     {
-        // resumeButton.onClick.AddListener( TogglePauseMenu );
+        resumeButton.onClick.AddListener(PauseMenu.TogglePauseMenu);
         
         restartButton.onClick.AddListener(() =>
         {
             //reload scene
-            Time.timeScale = 1f;
+            // Time.timeScale = 1f;
         } );
         
         mainMenuButton.onClick.AddListener(() =>
         {
             //return to main menu
         } );
+    }
+
+    private void Start()
+    {
+        PauseMenu.OnGamePaused += Show;
+        PauseMenu.OnGameUnpaused += Hide;
+        Hide();
+    }
+
+    private void OnDestroy()
+    {
+        PauseMenu.OnGamePaused -= Show;
+        PauseMenu.OnGameUnpaused -= Hide;
+    }
+
+    private void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
+    private void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }
