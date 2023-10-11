@@ -184,6 +184,11 @@ MonoBehaviour:
   objectHolder: {fileID: 3403304642946923062}
   speed: 500
   jumpPower: 10
+  boxSize: {x: 1, y: 0.2, z: 1}
+  maxDistance: 0.45
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &6315249157029931346
 GameObject:
   m_ObjectHideFlags: 0

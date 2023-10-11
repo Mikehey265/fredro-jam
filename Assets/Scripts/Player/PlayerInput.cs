@@ -10,6 +10,11 @@ public class PlayerInput : MonoBehaviour
        [SerializeField] private float speed;
        [SerializeField] private float jumpPower;
 
+       [Header("Ground check")]
+       [SerializeField] private Vector3 boxSize;
+       [SerializeField] private float maxDistance;
+       [SerializeField] private LayerMask layerMask;
+
        private PlayerControls _playerControls;
        private float _horizontal;
        private float _currentSpeed;
@@ -20,6 +25,7 @@ public class PlayerInput : MonoBehaviour
        {
               _playerControls = new PlayerControls();
               _playerControls.Enable();
+              
        }
 
        private void Start()
@@ -36,8 +42,6 @@ public class PlayerInput : MonoBehaviour
               InteractPerformed();
               
               HoldingBrickBehavior(_isHoldingObject);
-
-              Debug.Log(PickUp.Instance.IsInPickUpRange());
               
               if (!_isFacingRight && _horizontal > 0f)
               {
@@ -82,7 +86,7 @@ public class PlayerInput : MonoBehaviour
                             PickUp.Instance.SetIsHold(false);
                             _isHoldingObject = false;
                             Destroy(PickUp.Instance.gameObject);
-                            
+                            BrickSpawner.Instance.SpawnBrick();
                      }
               }
        }
@@ -108,8 +112,19 @@ public class PlayerInput : MonoBehaviour
               }
        }
 
+       private void OnDrawGizmos()
+       {
+              Gizmos.color = Color.red;
+              Gizmos.DrawCube(transform.position - transform.up * maxDistance, boxSize);
+       }
+
        private bool IsGrounded()
        {
-              return rb.velocity.y == 0;
+              if (Physics.BoxCast(transform.position, boxSize, -transform.up, transform.rotation, maxDistance, layerMask))
+              {
+                     return true;
+              }
+
+              return false;
        }
 }
