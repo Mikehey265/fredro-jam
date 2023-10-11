@@ -4,8 +4,6 @@ public class PickUp : MonoBehaviour
 {
     public static PickUp Instance { get; private set; }
 
-    // [SerializeField] private Rigidbody rb;
-
     private BoxCollider _boxCollider;
     private bool _isInRange;
     private bool _isBeingHold;
