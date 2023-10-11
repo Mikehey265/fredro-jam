@@ -48,6 +48,11 @@ public class PlayerInput : MonoBehaviour
                      Flip();
               }
        }
+
+       public bool IsPlayerHoldingObject()
+       {
+              return _isHoldingObject;
+       }
        
        private void MovePerformed()
        {
