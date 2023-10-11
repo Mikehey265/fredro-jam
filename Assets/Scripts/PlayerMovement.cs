@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
        [Header("Core")]
        [SerializeField] private Rigidbody rb;
+       [SerializeField] private Transform objectHolder;
        [SerializeField] private Transform groundCheck;
        [SerializeField] private LayerMask groundLayer;
        
@@ -15,10 +16,12 @@ public class PlayerMovement : MonoBehaviour
        
        private float _horizontal;
        private bool _isFacingRight;
+       private bool _isHoldingObject;
 
        private void Start()
        {
               _isFacingRight = true;
+              _isHoldingObject = false;
        }
 
        private void Update()
@@ -58,6 +61,17 @@ public class PlayerMovement : MonoBehaviour
               if (ctx.performed && IsGrounded())
               {
                      rb.velocity = new Vector3(rb.velocity.x, jumpPower, rb.velocity.z);
+              }
+       }
+
+       public void Interact(InputAction.CallbackContext ctx)
+       {
+              if (ctx.performed && PickUp.Instance.IsInRange() && !_isHoldingObject)
+              {
+                     _isHoldingObject = true;
+                     PickUp.Instance.gameObject.transform.SetParent(objectHolder);
+                     PickUp.Instance.SetIsHold(true, objectHolder.transform.position);
+                     Debug.Log(PickUp.Instance.name);
               }
        }
 }
