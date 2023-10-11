@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Button playButton;
+    [SerializeField] private Button creditsButton;
+    [SerializeField] private Button quitButton;
+    
+    private void Awake()
     {
+        playButton.onClick.AddListener(() =>
+        {
+            //load first scene
+        } );
         
-    }
+        creditsButton.onClick.AddListener(() =>
+        {
+            //load credits scene or show credits panel
+        } );
+        
+        quitButton.onClick.AddListener(Application.Quit);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Time.timeScale = 1f;
     }
 }
