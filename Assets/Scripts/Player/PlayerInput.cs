@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -10,11 +9,18 @@ public class PlayerInput : MonoBehaviour
        [Header("Player Settings")]
        [SerializeField] private float speed;
        [SerializeField] private float jumpPower;
-       
+
+       private PlayerControls _playerControls;
        private float _horizontal;
        private float _currentSpeed;
        private bool _isFacingRight;
        private bool _isHoldingObject;
+
+       private void Awake()
+       {
+              _playerControls = new PlayerControls();
+              _playerControls.Enable();
+       }
 
        private void Start()
        {
@@ -25,8 +31,13 @@ public class PlayerInput : MonoBehaviour
 
        private void FixedUpdate()
        {
-              rb.velocity = new Vector2(_horizontal * _currentSpeed * Time.deltaTime, rb.velocity.y);
+              MovePerformed();
+              JumpPerformed();
+              InteractPerformed();
+              
               HoldingBrickBehavior(_isHoldingObject);
+
+              Debug.Log(PickUp.Instance.IsInPickUpRange());
               
               if (!_isFacingRight && _horizontal > 0f)
               {
@@ -38,26 +49,41 @@ public class PlayerInput : MonoBehaviour
               }
        }
        
-       public void Move(InputAction.CallbackContext ctx)
+       private void MovePerformed()
        {
-              _horizontal = ctx.ReadValue<Vector2>().x;
+              _horizontal = _playerControls.Player.Move.ReadValue<float>();
+              rb.velocity = new Vector2(_horizontal * _currentSpeed * Time.deltaTime, rb.velocity.y);
        }
 
-       public void Jump(InputAction.CallbackContext ctx)
+       private void JumpPerformed()
        {
-              if (ctx.performed && IsGrounded())
+              if (_playerControls.Player.Jump.IsPressed() && IsGrounded())
               {
                      rb.velocity = new Vector3(rb.velocity.x, jumpPower, rb.velocity.z);
               }
        }
 
-       public void Interact(InputAction.CallbackContext ctx)
+       private void InteractPerformed()
        {
-              if (ctx.performed && PickUp.Instance.IsInRange() && !_isHoldingObject)
+              if (_playerControls.Player.Interact.IsPressed())
               {
-                     _isHoldingObject = true;
-                     PickUp.Instance.gameObject.transform.SetParent(objectHolder);
-                     PickUp.Instance.SetIsHold(true, objectHolder.transform.position);
+                     if (!_isHoldingObject)
+                     {
+                            if(!PickUp.Instance.IsInPickUpRange()) return;
+                            _isHoldingObject = true;
+                            PickUp.Instance.gameObject.transform.SetParent(objectHolder);
+                            PickUp.Instance.SetIsHold(true);
+                            PickUp.Instance.gameObject.transform.position = objectHolder.position;
+                     } 
+                     
+                     if (_isHoldingObject)
+                     {
+                            if(!Wall.Instance.IsInWallRange()) return;
+                            PickUp.Instance.SetIsHold(false);
+                            _isHoldingObject = false;
+                            Destroy(PickUp.Instance.gameObject);
+                            
+                     }
               }
        }
 
