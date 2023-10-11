@@ -17,6 +17,7 @@ public class Wall : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _isInWallRange = true;
+            Debug.Log(_isInWallRange);
         }
     }
 
@@ -25,6 +26,12 @@ public class Wall : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _isInWallRange = false;
+            Debug.Log(_isInWallRange);
         }
+    }
+
+    public bool IsInWallRange()
+    {
+        return _isInWallRange;
     }
 }

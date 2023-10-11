@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -38,6 +36,8 @@ public class PlayerInput : MonoBehaviour
               InteractPerformed();
               
               HoldingBrickBehavior(_isHoldingObject);
+
+              Debug.Log(PickUp.Instance.IsInPickUpRange());
               
               if (!_isFacingRight && _horizontal > 0f)
               {
@@ -47,11 +47,6 @@ public class PlayerInput : MonoBehaviour
               {
                      Flip();
               }
-       }
-
-       public bool IsPlayerHoldingObject()
-       {
-              return _isHoldingObject;
        }
        
        private void MovePerformed()
@@ -70,11 +65,25 @@ public class PlayerInput : MonoBehaviour
 
        private void InteractPerformed()
        {
-              if (_playerControls.Player.Interact.IsPressed() && PickUp.Instance.IsInRange() && !_isHoldingObject)
+              if (_playerControls.Player.Interact.IsPressed())
               {
-                     _isHoldingObject = true;
-                     PickUp.Instance.gameObject.transform.SetParent(objectHolder);
-                     PickUp.Instance.SetIsHold(true, objectHolder.transform.position);
+                     if (!_isHoldingObject)
+                     {
+                            if(!PickUp.Instance.IsInPickUpRange()) return;
+                            _isHoldingObject = true;
+                            PickUp.Instance.gameObject.transform.SetParent(objectHolder);
+                            PickUp.Instance.SetIsHold(true);
+                            PickUp.Instance.gameObject.transform.position = objectHolder.position;
+                     } 
+                     
+                     if (_isHoldingObject)
+                     {
+                            if(!Wall.Instance.IsInWallRange()) return;
+                            PickUp.Instance.SetIsHold(false);
+                            _isHoldingObject = false;
+                            Destroy(PickUp.Instance.gameObject);
+                            
+                     }
               }
        }
 

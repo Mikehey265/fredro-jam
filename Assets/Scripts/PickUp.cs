@@ -5,7 +5,7 @@ public class PickUp : MonoBehaviour
     public static PickUp Instance { get; private set; }
 
     private BoxCollider _boxCollider;
-    private bool _isInRange;
+    private bool _isInPickUpRange;
     private bool _isBeingHold;
 
     private void Awake()
@@ -18,8 +18,8 @@ public class PickUp : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _isInRange = true;
-            Debug.Log(_isInRange);
+            _isInPickUpRange = true;
+            // Debug.Log(_isInRange);
         }
     }
 
@@ -27,8 +27,8 @@ public class PickUp : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _isInRange = false;
-            Debug.Log(_isInRange);
+            _isInPickUpRange = false;
+            // Debug.Log(_isInRange);
         }
     }
 
@@ -37,17 +37,17 @@ public class PickUp : MonoBehaviour
         if (_isBeingHold)
         {
             _boxCollider.enabled = false;
+            _isInPickUpRange = false;
         }
     }
 
-    public void SetIsHold(bool isBeingHold, Vector3 parentPosition)
+    public void SetIsHold(bool isBeingHold)
     {
         _isBeingHold = isBeingHold;
-        transform.position = parentPosition;
     }
 
-    public bool IsInRange()
+    public bool IsInPickUpRange()
     {
-        return _isInRange;
+        return _isInPickUpRange;
     }
 }
