@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerInput : MonoBehaviour
 {
        [Header("Core")]
        [SerializeField] private Rigidbody rb;
@@ -15,11 +15,13 @@ public class PlayerMovement : MonoBehaviour
        [SerializeField] private float jumpPower;
        
        private float _horizontal;
+       private float _currentSpeed;
        private bool _isFacingRight;
        private bool _isHoldingObject;
 
        private void Start()
        {
+              _currentSpeed = speed;
               _isFacingRight = true;
               _isHoldingObject = false;
        }
@@ -27,7 +29,9 @@ public class PlayerMovement : MonoBehaviour
        private void Update()
        {
               rb.velocity = new Vector3(_horizontal * speed, rb.velocity.y, rb.velocity.z);
+              HoldingBrickBehavior(_isHoldingObject);
 
+              Debug.Log(_currentSpeed);
               if (!_isFacingRight && _horizontal > 0f)
               {
                      Flip();
@@ -37,20 +41,7 @@ public class PlayerMovement : MonoBehaviour
                      Flip();
               }
        }
-
-       private void Flip()
-       {
-              _isFacingRight = !_isFacingRight;
-              Vector3 facingRight = transform.right;
-              facingRight.x *= -1f;
-              transform.right = facingRight;
-       }
-
-       private bool IsGrounded()
-       {
-              return rb.velocity.y == 0;
-       }
-
+       
        public void Move(InputAction.CallbackContext ctx)
        {
               _horizontal = ctx.ReadValue<Vector2>().x;
@@ -73,5 +64,26 @@ public class PlayerMovement : MonoBehaviour
                      PickUp.Instance.SetIsHold(true, objectHolder.transform.position);
                      Debug.Log(PickUp.Instance.name);
               }
+       }
+
+       private void Flip()
+       {
+              _isFacingRight = !_isFacingRight;
+              Vector3 facingRight = transform.right;
+              facingRight.x *= -1f;
+              transform.right = facingRight;
+       }
+
+       private void HoldingBrickBehavior(bool isHoldingObject)
+       {
+              _isHoldingObject = isHoldingObject;
+              if (!_isHoldingObject) return;
+
+              _currentSpeed = speed / 2f;
+       }
+
+       private bool IsGrounded()
+       {
+              return rb.velocity.y == 0;
        }
 }
