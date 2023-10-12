@@ -84,6 +84,10 @@ MonoBehaviour:
   - {fileID: 6560517874992823911}
   - {fileID: 6541194557966622706}
   - {fileID: 5527472869340426018}
+  quotes:
+  - first
+  - second
+  - third
   brickPrefab: {fileID: 6913899461096353320, guid: 340310b6579dbe14bb37d0943c6267ef, type: 3}
 --- !u!1 &2995817576605425161
 GameObject:

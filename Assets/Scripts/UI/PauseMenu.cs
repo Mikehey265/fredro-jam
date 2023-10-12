@@ -33,6 +33,7 @@ public class PauseMenu : MonoBehaviour
 
     public static void TogglePauseMenu()
     {
+        if(GameManager.Instance.IsGameOver()) return;
         _isGamePaused = !_isGamePaused;
         if (_isGamePaused)
         { 

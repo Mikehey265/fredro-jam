@@ -1,11 +1,15 @@
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScorePanelUI : MonoBehaviour
 {
     [SerializeField] private Button restartLevelButton;
     [SerializeField] private Button mainMenuButton;
+    [SerializeField] private TextMeshProUGUI timeText;
+    [SerializeField] private TextMeshProUGUI scoreText;
     
     private void Awake()
     {
@@ -16,7 +20,7 @@ public class ScorePanelUI : MonoBehaviour
         
         mainMenuButton.onClick.AddListener(() =>
         {
-            //load main menu scene
+            SceneManager.LoadScene(0);
         } );
     }
 
@@ -33,6 +37,7 @@ public class ScorePanelUI : MonoBehaviour
 
     private void UpdateScorePanel()
     {
+        timeText.text = "Your time: " + (int)GameManager.Instance.GetGameTime() + "s";
         Show();
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenuUI : MonoBehaviour
@@ -19,7 +20,7 @@ public class PauseMenuUI : MonoBehaviour
         
         mainMenuButton.onClick.AddListener(() =>
         {
-            //return to main menu
+            SceneManager.LoadScene(0);
         } );
     }
 
