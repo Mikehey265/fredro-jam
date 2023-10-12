@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     public static Action OnWallHpModified;
     public static Action OnBrickPickedUp;
     public static Action OnGameFinished;
-    public static Action OnGameStarted;
 
     public enum State
     {
@@ -39,17 +38,19 @@ public class GameManager : MonoBehaviour
         switch (_state)
         {
             case State.SlidesBeforeStart:
-                OnGameStarted?.Invoke();
                 break;
             case State.GamePlaying:
                 _gameTime += Time.deltaTime;
-                if (Wall.Instance.GetCurrentHealth() <= 0 || Wall.Instance.GetCurrentHealth() >= Wall.Instance.GetMaxHealth())
+                if (Wall.Instance.GetCurrentHealth() <= 0)
+                {
+                    _state = State.GameOver;
+                } else if (Wall.Instance.GetCurrentHealth() >= Wall.Instance.GetMaxHealth())
                 {
                     _state = State.SlidesAfterFinish;
                 }
                 break;
             case State.SlidesAfterFinish:
-                OnGameFinished?.Invoke();
+                FinalSlideUI.Instance.LaunchFinalSlide();
                 break;
             case State.GameOver:
                 OnScorePanelActivated?.Invoke();
