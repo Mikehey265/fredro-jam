@@ -83,6 +83,7 @@ public class PlayerInput : MonoBehaviour
                      if (_isHoldingObject)
                      {
                             if(!Wall.Instance.IsInWallRange()) return;
+                            Wall.Instance.AddHealth();
                             PickUp.Instance.SetIsHold(false);
                             _isHoldingObject = false;
                             Destroy(PickUp.Instance.gameObject);
