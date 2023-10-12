@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 7398005912959350485}
   - component: {fileID: 2073073785339399927}
   m_Layer: 5
-  m_Name: PausedText
+  m_Name: FinishedText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -705,6 +705,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   restartLevelButton: {fileID: 266251672876563217}
   mainMenuButton: {fileID: 2320804975900949715}
+  timeText: {fileID: 5461403726193307959}
+  scoreText: {fileID: 5447720351193438853}
 --- !u!1 &8184655466812738801
 GameObject:
   m_ObjectHideFlags: 0

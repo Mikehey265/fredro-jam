@@ -85,6 +85,7 @@ public class PlayerInput : MonoBehaviour
                      {
                             if(!PickUp.Instance.IsInPickUpRange()) return;
                             _isHoldingObject = true;
+                            GameManager.OnBrickPickedUp?.Invoke();
                             PickUp.Instance.gameObject.transform.SetParent(objectHolder);
                             PickUp.Instance.SetIsHold(true);
                             PickUp.Instance.gameObject.transform.position = objectHolder.position;
@@ -94,6 +95,7 @@ public class PlayerInput : MonoBehaviour
                      {
                             if(!Wall.Instance.IsInWallRange()) return;
                             Wall.Instance.AddHealth();
+                            GameManager.OnWallHpModified?.Invoke();
                             PickUp.Instance.SetIsHold(false);
                             _isHoldingObject = false;
                             Destroy(PickUp.Instance.gameObject);
