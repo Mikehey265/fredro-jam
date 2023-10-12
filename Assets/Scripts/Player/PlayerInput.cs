@@ -14,6 +14,7 @@ public class PlayerInput : MonoBehaviour
        [SerializeField] private Vector3 boxSize;
        [SerializeField] private float maxDistance;
        [SerializeField] private LayerMask layerMask;
+       [SerializeField] private LayerMask damageLayerMask;
 
        private PlayerControls _playerControls;
        private float _horizontal;
@@ -37,6 +38,7 @@ public class PlayerInput : MonoBehaviour
 
        private void FixedUpdate()
        {
+              if(!GameManager.Instance.IsGamePlaying()) return;
               MovePerformed();
               JumpPerformed();
               InteractPerformed();

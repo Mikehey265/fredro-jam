@@ -1,26 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class TimerScript : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI countDownText;
+    
     public float currentTime = 10f;
     public float startingTime = 120f;
-    [SerializeField] TextMeshProUGUI countDownText;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
-        currentTime = startingTime;
+        ResetTimer();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        currentTime -= 1 * Time.deltaTime;
-        countDownText.text = currentTime.ToString("0");
+        if (GameManager.Instance.IsGamePlaying())
+        {
+            currentTime -= 1 * Time.deltaTime;
+            countDownText.text = currentTime.ToString("0");
 
+            if (currentTime < 0f)
+            {
+                Wall.Instance.RemoveHealth();
+                ResetTimer();
+            }   
+        }
+    }
+
+    private void ResetTimer()
+    {
+        currentTime = startingTime;
     }
 }
