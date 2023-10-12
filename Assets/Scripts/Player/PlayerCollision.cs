@@ -9,16 +9,12 @@ public class PlayerCollision : MonoBehaviour
       _isPlayerDamaged = false;
    }
 
-   private void Update()
-   {
-      UnityEngine.Debug.Log(_isPlayerDamaged);
-   }
-
    private void OnTriggerEnter(Collider other)
    {
       if (other.gameObject.CompareTag("Damageable"))
       {
          _isPlayerDamaged = true;
+         if(GameManager.Instance.IsGameOver()) return;
          Obstacle.Instance.RespawnPlayer(gameObject, 2f);
       }
    }

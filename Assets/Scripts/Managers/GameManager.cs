@@ -6,9 +6,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public static Action OnScorePanelActivated;
-    public static Action OnPlayerDamaged;
+    public static Action OnWallHpModified;
+    public static Action OnBrickPickedUp;
 
-    private enum State
+    public enum State
     {
         WaitingToStart,
         GamePlaying,
@@ -16,6 +17,8 @@ public class GameManager : MonoBehaviour
     }
 
     private State _state;
+
+    private float _gameTime;
     
     private void Awake()
     {
@@ -27,15 +30,16 @@ public class GameManager : MonoBehaviour
         _state = State.GamePlaying;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        // Debug.Log(_state);
+        Debug.Log("State: " + _state);
+        Debug.Log("GameTime: " + _gameTime);
         switch (_state)
         {
             case State.WaitingToStart:
-                //slides
                 break;
             case State.GamePlaying:
+                _gameTime += Time.deltaTime;
                 if (Wall.Instance.GetCurrentHealth() <= 0 || Wall.Instance.GetCurrentHealth() >= Wall.Instance.GetMaxHealth())
                 {
                     _state = State.GameOver;
@@ -50,5 +54,20 @@ public class GameManager : MonoBehaviour
     public bool IsGamePlaying()
     {
         return _state == State.GamePlaying;
+    }
+
+    public bool IsGameOver()
+    {
+        return _state == State.GameOver;
+    }
+
+    public float GetGameTime()
+    {
+        return _gameTime;
+    }
+
+    public void SetNewState(State state)
+    {
+        _state = state;
     }
 }
