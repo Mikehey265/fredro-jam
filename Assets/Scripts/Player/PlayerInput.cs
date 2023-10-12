@@ -19,7 +19,7 @@ public class PlayerInput : MonoBehaviour
        private PlayerCollision _playerCollision;
        private float _horizontal;
        private float _currentSpeed;
-       public bool _isFacingRight;
+       private bool _isFacingRight;
        private bool _isHoldingObject;
        private Animator animator;
 
@@ -47,13 +47,14 @@ public class PlayerInput : MonoBehaviour
               
               HoldingBrickBehavior(_isHoldingObject);
               
-              if (!_isFacingRight && _horizontal > 90f)
+              if (!_isFacingRight && _horizontal > 0f)
               {
                      Flip();
-              }
-              else if (_isFacingRight && _horizontal < 1f)
+            print("go right");
+        }
+              else if (_isFacingRight && _horizontal < 0f)
               {
-                     Flip();
+            Flip();
               }
        }
        
@@ -105,7 +106,7 @@ public class PlayerInput : MonoBehaviour
        {
               _isFacingRight = !_isFacingRight;
               Vector3 facingRight = transform.right;
-              facingRight.x *= -1f;
+              facingRight.z *= -1f;
               transform.right = facingRight;
        }
 
