@@ -19,7 +19,7 @@ public class PickUp : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _isInPickUpRange = true;
-            // Debug.Log(_isInRange);
+            Debug.Log(_isInPickUpRange);
         }
     }
 
@@ -28,7 +28,7 @@ public class PickUp : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _isInPickUpRange = false;
-            // Debug.Log(_isInRange);
+            Debug.Log(_isInPickUpRange);
         }
     }
 

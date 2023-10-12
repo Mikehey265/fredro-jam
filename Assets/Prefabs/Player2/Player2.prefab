@@ -223,6 +223,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7036213049465896255, guid: dfbf5b7ece8d6894c990e896acd89638, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7570456002536969217, guid: dfbf5b7ece8d6894c990e896acd89638, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
