@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public static Action OnScorePanelActivated;
+    public static Action OnPlayerDamaged;
 
     private enum State
     {
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(_state);
+        // Debug.Log(_state);
         switch (_state)
         {
             case State.WaitingToStart:

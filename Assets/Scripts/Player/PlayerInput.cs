@@ -14,9 +14,9 @@ public class PlayerInput : MonoBehaviour
        [SerializeField] private Vector3 boxSize;
        [SerializeField] private float maxDistance;
        [SerializeField] private LayerMask layerMask;
-       [SerializeField] private LayerMask damageLayerMask;
 
        private PlayerControls _playerControls;
+       private PlayerCollision _playerCollision;
        private float _horizontal;
        private float _currentSpeed;
        private bool _isFacingRight;
@@ -25,8 +25,8 @@ public class PlayerInput : MonoBehaviour
        private void Awake()
        {
               _playerControls = new PlayerControls();
+              _playerCollision = GetComponent<PlayerCollision>();
               _playerControls.Enable();
-              
        }
 
        private void Start()
@@ -38,7 +38,7 @@ public class PlayerInput : MonoBehaviour
 
        private void FixedUpdate()
        {
-              if(!GameManager.Instance.IsGamePlaying()) return;
+              if(!GameManager.Instance.IsGamePlaying() || _playerCollision.GetIsPlayerDamaged()) return;
               MovePerformed();
               JumpPerformed();
               InteractPerformed();
