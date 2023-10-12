@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +26,17 @@ public class SlidesMenuUI : MonoBehaviour
         _audioSource.Play();
         StartCoroutine(PlayVo());
     }
-    
+
+    private void OnEnable()
+    {
+        GameManager.OnGameFinished += PlayLastSlide;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameFinished -= PlayLastSlide;
+    }
+
     IEnumerator PlayVo()
     {
         yield return new WaitForSeconds(_audioSource.clip.length);
@@ -35,5 +47,20 @@ public class SlidesMenuUI : MonoBehaviour
         yield return new WaitForSeconds(_audioSource.clip.length);
         gameObject.SetActive(false);
         GameManager.Instance.SetNewState(GameManager.State.GamePlaying);
+    }
+
+    private void PlayLastSlide()
+    {
+        gameObject.SetActive(true);
+        StartCoroutine(PlayLastVo());
+    }
+
+    IEnumerator PlayLastVo()
+    {
+        yield return new WaitForSeconds(_audioSource.clip.length);
+        currentSlideImage.sprite = slides[2];
+        _audioSource.clip = audioClips[2];
+        _audioSource.Play();
+        gameObject.SetActive(false);
     }
 }

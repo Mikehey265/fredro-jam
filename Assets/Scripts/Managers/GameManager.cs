@@ -8,12 +8,15 @@ public class GameManager : MonoBehaviour
     public static Action OnScorePanelActivated;
     public static Action OnWallHpModified;
     public static Action OnBrickPickedUp;
+    public static Action OnGameFinished;
+    public static Action OnGameStarted;
 
     public enum State
     {
-        WaitingToStart,
+        SlidesBeforeStart,
         GamePlaying,
         GameOver,
+        SlidesAfterFinish,
     }
 
     private State _state;
@@ -27,23 +30,26 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _state = State.GamePlaying;
+        _state = State.SlidesBeforeStart;
     }
 
     private void FixedUpdate()
     {
-        Debug.Log("State: " + _state);
-        Debug.Log("GameTime: " + _gameTime);
+        Debug.Log(_state);
         switch (_state)
         {
-            case State.WaitingToStart:
+            case State.SlidesBeforeStart:
+                OnGameStarted?.Invoke();
                 break;
             case State.GamePlaying:
                 _gameTime += Time.deltaTime;
                 if (Wall.Instance.GetCurrentHealth() <= 0 || Wall.Instance.GetCurrentHealth() >= Wall.Instance.GetMaxHealth())
                 {
-                    _state = State.GameOver;
+                    _state = State.SlidesAfterFinish;
                 }
+                break;
+            case State.SlidesAfterFinish:
+                OnGameFinished?.Invoke();
                 break;
             case State.GameOver:
                 OnScorePanelActivated?.Invoke();
