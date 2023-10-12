@@ -19,14 +19,16 @@ public class PlayerInput : MonoBehaviour
        private PlayerCollision _playerCollision;
        private float _horizontal;
        private float _currentSpeed;
-       private bool _isFacingRight;
+       public bool _isFacingRight;
        private bool _isHoldingObject;
+       private Animator animator;
 
        private void Awake()
        {
               _playerControls = new PlayerControls();
               _playerCollision = GetComponent<PlayerCollision>();
               _playerControls.Enable();
+              animator = GetComponent<Animator>();
        }
 
        private void Start()
@@ -45,11 +47,11 @@ public class PlayerInput : MonoBehaviour
               
               HoldingBrickBehavior(_isHoldingObject);
               
-              if (!_isFacingRight && _horizontal > 0f)
+              if (!_isFacingRight && _horizontal > 90f)
               {
                      Flip();
               }
-              else if (_isFacingRight && _horizontal < 0f)
+              else if (_isFacingRight && _horizontal < 1f)
               {
                      Flip();
               }
@@ -57,14 +59,19 @@ public class PlayerInput : MonoBehaviour
        
        private void MovePerformed()
        {
-              _horizontal = _playerControls.Player.Move.ReadValue<float>();
+             _horizontal = _playerControls.Player.Move.ReadValue<float>();
               rb.velocity = new Vector2(_horizontal * _currentSpeed * Time.deltaTime, rb.velocity.y);
-       }
+                animator.SetFloat("Speed", Mathf.Abs(_horizontal));
 
-       private void JumpPerformed()
+
+    }
+
+    private void JumpPerformed()
        {
               if (_playerControls.Player.Jump.IsPressed() && IsGrounded())
               {
+                     animator.SetBool("IsJumping", true);
+                     animator.SetTrigger("Jumpin");
                      rb.velocity = new Vector3(rb.velocity.x, jumpPower, rb.velocity.z);
               }
        }
@@ -121,7 +128,7 @@ public class PlayerInput : MonoBehaviour
               Gizmos.DrawCube(transform.position - transform.up * maxDistance, boxSize);
        }
 
-       private bool IsGrounded()
+       public bool IsGrounded()
        {
               if (Physics.BoxCast(transform.position, boxSize, -transform.up, transform.rotation, maxDistance, layerMask))
               {
