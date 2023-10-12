@@ -71,7 +71,7 @@ public class PlayerInput : MonoBehaviour
        {
               if (_playerControls.Player.Jump.IsPressed() && IsGrounded())
               {
-                     animator.SetBool("IsJumping", true);
+                     //animator.SetBool("IsJumping", true);
                      animator.SetTrigger("Jumpin");
                      rb.velocity = new Vector3(rb.velocity.x, jumpPower, rb.velocity.z);
               }
