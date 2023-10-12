@@ -9,10 +9,6 @@ public class PlayerCollision : MonoBehaviour
       _isPlayerDamaged = false;
    }
 
-   private void Update()
-   {
-      UnityEngine.Debug.Log(_isPlayerDamaged);
-   }
 
    private void OnTriggerEnter(Collider other)
    {
