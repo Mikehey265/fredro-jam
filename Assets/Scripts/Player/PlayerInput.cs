@@ -38,7 +38,8 @@ public class PlayerInput : MonoBehaviour
 
        private void FixedUpdate()
        {
-              if(!GameManager.Instance.IsGamePlaying()) return;
+              if(!GameManager.Instance.IsGamePlaying())
+            return;
               MovePerformed();
               JumpPerformed();
               InteractPerformed();
