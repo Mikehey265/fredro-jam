@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     public static Action OnScorePanelActivated;
     public static Action OnWallHpModified;
     public static Action OnBrickPickedUp;
-    public static Action OnGameFinished;
 
     public enum State
     {
@@ -34,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Debug.Log(_state);
+        Debug.Log(_state);
         switch (_state)
         {
             case State.SlidesBeforeStart:

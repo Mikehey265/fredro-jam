@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Wall HP:'
+  m_text: 'Mur:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 009b29a585d914b43a226f2a9d10c849, type: 2}
   m_sharedMaterial: {fileID: 9051692598872891230, guid: 009b29a585d914b43a226f2a9d10c849, type: 2}

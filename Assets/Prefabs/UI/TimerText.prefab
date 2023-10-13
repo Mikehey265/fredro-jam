@@ -50,9 +50,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaeb3f6f042250e4cb197621d1c84ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countDownText: {fileID: 3545444711431621886}
   currentTime: 10
   startingTime: 120
-  countDownText: {fileID: 3545444711431621886}
 --- !u!222 &4072903812965247368
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Time:'
+  m_text: 'Czas:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 009b29a585d914b43a226f2a9d10c849, type: 2}
   m_sharedMaterial: {fileID: 9051692598872891230, guid: 009b29a585d914b43a226f2a9d10c849, type: 2}

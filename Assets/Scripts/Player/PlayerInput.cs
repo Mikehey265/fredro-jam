@@ -109,7 +109,7 @@ public class PlayerInput : MonoBehaviour
               _isHoldingObject = isHoldingObject;
               if (_isHoldingObject)
               {
-                     _currentSpeed = speed / 2f;      
+                     _currentSpeed = speed -150f;      
               }
               else
               {

@@ -14,8 +14,8 @@ public class PauseMenuUI : MonoBehaviour
         
         restartButton.onClick.AddListener(() =>
         {
-            //reload scene
-            // Time.timeScale = 1f;
+            SceneManager.LoadScene(1);
+            Time.timeScale = 1f;
         } );
         
         mainMenuButton.onClick.AddListener(() =>

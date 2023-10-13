@@ -15,7 +15,7 @@ public class ScorePanelUI : MonoBehaviour
     {
         restartLevelButton.onClick.AddListener(() =>
         {
-            //reload current scene
+            SceneManager.LoadScene(1);
         } );
         
         mainMenuButton.onClick.AddListener(() =>
