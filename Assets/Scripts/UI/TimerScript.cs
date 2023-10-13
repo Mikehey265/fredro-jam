@@ -18,7 +18,7 @@ public class TimerScript : MonoBehaviour
         if (GameManager.Instance.IsGamePlaying())
         {
             currentTime -= 1 * Time.deltaTime;
-            countDownText.text = currentTime.ToString("0");
+            countDownText.text = "Czas: " + (int)currentTime;
 
             if (currentTime < 0f)
             {

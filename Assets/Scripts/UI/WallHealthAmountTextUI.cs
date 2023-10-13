@@ -23,6 +23,6 @@ public class WallHealthAmountTextUI : MonoBehaviour
 
     private void UpdateText()
     {
-        wallHpText.text = "Wall HP: " + Wall.Instance.GetCurrentHealth() + " / " + Wall.Instance.GetMaxHealth();
+        wallHpText.text = "Mur: " + Wall.Instance.GetCurrentHealth() + " / " + Wall.Instance.GetMaxHealth();
     }
 }

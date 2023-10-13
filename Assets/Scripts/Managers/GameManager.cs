@@ -28,12 +28,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _state = State.GamePlaying;
+        //to modify the level change to: _state = State.GamePlaying;
+        _state = State.SlidesBeforeStart;
     }
 
     private void FixedUpdate()
     {
-        Debug.Log(_state);
         switch (_state)
         {
             case State.SlidesBeforeStart:
